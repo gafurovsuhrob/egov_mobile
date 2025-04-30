@@ -1,0 +1,332 @@
+//import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
+//import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+//
+//plugins {
+//    alias(libs.plugins.kotlinMultiplatform)
+//    alias(libs.plugins.androidLibrary)
+//    alias(libs.plugins.kotlinxSerialization)
+//    alias(libs.plugins.kmpNativeCoroutines)
+//
+//    id("app.cash.sqldelight") version "2.0.2"
+////    alias(libs.plugins.kotlinCocoapods)
+//    alias(libs.plugins.composeMultiplatform)
+//    alias(libs.plugins.composeCompiler)
+//}
+//
+//android {
+//    namespace = "tj.ojsk.egov"
+//    compileSdk = 35
+//    sourceSets["main"].manifest.srcFile("src/main/AndroidManifest.xml")
+//    defaultConfig {
+//        minSdk = 27
+//    }
+//    compileOptions {
+//        sourceCompatibility = JavaVersion.VERSION_11
+//        targetCompatibility = JavaVersion.VERSION_11
+//    }
+//}
+//
+//kotlin {
+//    androidTarget {
+//        compilations.all {
+//            compileTaskProvider.configure {
+//                compilerOptions {
+//                    jvmTarget.set(JvmTarget.JVM_11)
+//                }
+//            }
+//        }
+//    }
+//
+//
+//    listOf(
+//        iosX64(),
+//        iosArm64(),
+//        iosSimulatorArm64()
+//    ).forEach {
+//        it.binaries.framework {
+//            baseName = "shared"
+//            isStatic = true
+//        }
+//    }
+//
+//    sourceSets {
+//        commonMain.dependencies {
+//            dependencies {
+//                api(libs.koin.core)
+//                implementation(libs.koin.androidx.compose)
+//
+//                implementation(compose.runtime)
+//                implementation(compose.foundation)
+//
+//                implementation(compose.material3)
+//                implementation(compose.material)
+//                implementation(compose.materialIconsExtended)
+//
+//                implementation(compose.components.resources)
+//                implementation(compose.ui)
+//                implementation(compose.components.uiToolingPreview)
+//
+//                implementation(libs.kotlinx.coroutinesCore)
+//                implementation(libs.kotlinx.serializationJson)
+//                implementation(libs.ktor.clientCore)
+//                implementation(libs.ktor.clientContentNegotiation)
+//                implementation(libs.ktor.serializationKotlinxJson)
+//                implementation(libs.koin.core)
+//                api(libs.kmp.observable.viewmodel)
+//
+//
+////                implementation(compose.material)
+////                implementation(compose.materialIconsExtended)
+//
+//                implementation(libs.sqlDelight.runtime)
+//                implementation(libs.sqlDelight.coroutinesExtensions)
+//                implementation(libs.sqlDelight.primitiveAdapters)
+//
+////            implementation(libs.material3.window.size.multiplatform)
+//
+////            api(libs.multiplatformSettings.noArg)
+////            api(libs.multiplatformSettings.coroutines)
+//
+////            api(libs.napier)
+//
+//                implementation(libs.kotlinX.dateTime)
+//                implementation(libs.koalaplot.core)
+//
+//                implementation(libs.stdlib)
+//
+////                implementation(libs.androidx.lifecycle.viewmodel.kmp)
+//                implementation(libs.androidx.navigation.compose)
+//                implementation(libs.androidx.lifecycle.viewmodel.android)
+//                implementation(libs.androidx.lifecycle.viewmodel.compose)
+//            }
+//        }
+//        commonTest.dependencies {
+//            implementation(libs.kotlin.test)
+//        }
+//        iosMain.dependencies {
+//            implementation(libs.ktor.clientDarwin)
+//            implementation(libs.sqlDelight.nativeDriver)
+//
+////            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+////            implementation(compose.components.resources)
+//        }
+//        androidMain.dependencies {
+//            dependencies {
+//                implementation(libs.androidx.viewmodel.compose)
+//                implementation(libs.ktor.clientOkhttp)
+//
+//                implementation(libs.accompanist.systemUIController)
+//                implementation(libs.core)
+//                implementation(libs.androidx.activity.compose)
+//
+//                implementation(libs.koin.android)
+//                implementation(libs.koin.androidx.compose)
+//
+//                implementation(libs.androidx.lifecycle.viewmodel.android)
+//            }
+//        }
+//    }
+//}
+//
+////
+////plugins {
+////    alias(libs.plugins.kotlinMultiplatform)
+////    alias(libs.plugins.kotlinxSerialization)
+////    alias(libs.plugins.kmpNativeCoroutines)
+////    alias(libs.plugins.sqlDelight)
+////}
+////
+////kotlin {
+//////    androidTarget()
+//////    androidTarget {
+//////        compilations.all {
+//////            compileTaskProvider.configure {
+//////                compilerOptions {
+//////                    jvmTarget.set(JvmTarget.JVM_11)
+//////                }
+//////            }
+//////        }
+//////    }
+////
+////    iosX64()
+////    iosArm64()
+////    iosSimulatorArm64()
+////
+////    sourceSets {
+////        commonMain.dependencies {
+////            // Coroutines
+////            implementation(libs.kotlinx.coroutinesCore)
+////
+////            // Serialization
+////            implementation(libs.kotlinx.serializationJson)
+////
+////            // Koin (DI)
+////            implementation(libs.koin.core)
+////
+////            // SQLDelight
+////            implementation(libs.sqlDelight.runtime)
+////            implementation(libs.sqlDelight.coroutinesExtensions)
+////
+////            // Ktor (Networking)
+////            implementation(libs.ktor.clientCore)
+////            implementation(libs.ktor.clientContentNegotiation)
+////            implementation(libs.ktor.serializationKotlinxJson)
+////        }
+////        androidMain.dependencies {
+////            implementation(libs.ktor.clientOkhttp)
+////            implementation(libs.sqlDelight.androidDriver)
+////        }
+////        iosMain.dependencies {
+////            implementation(libs.ktor.clientDarwin)
+////            implementation(libs.sqlDelight.nativeDriver)
+////        }
+////    }
+////}
+////sqldelight {
+////    databases {
+////        create("EGOVDatabase1") {
+////            packageName.set("tj.ojsk.egov.database")
+////        }
+////    }
+////}
+
+/*
+ * Copyright 2024 Joel Kanyi.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
+plugins {
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlinX.serialization.plugin)
+    id("app.cash.sqldelight") version "2.0.2"
+    alias(libs.plugins.nativeCocoapod)
+    alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.compose.compiler)
+}
+
+android {
+    namespace = "tj.ojsk.egov"
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    // sourceSets["main"].res.srcDirs("src/androidMain/res")
+    // sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+    compileSdk = 35
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 35
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
+        }
+    }
+    iosArm64()
+    iosSimulatorArm64()
+
+    cocoapods {
+        version = "1.0"
+        summary = "Some description for a Kotlin/Native module"
+        homepage = "Link to a Kotlin/Native module homepage"
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../ios/Podfile")
+        framework {
+            baseName = "shared"
+            isStatic = false
+        }
+    }
+
+    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
+        binaries.withType<org.jetbrains.kotlin.gradle.plugin.mpp.Framework> {
+            @OptIn(ExperimentalKotlinGradlePluginApi::class)
+            transitiveExport = true
+            compilations.all {
+                kotlinOptions.freeCompilerArgs += arrayOf("-linker-options", "-lsqlite3")
+            }
+        }
+    }
+
+    sourceSets {
+        commonMain.dependencies {
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+
+            implementation(compose.material3)
+            implementation(compose.material)
+            implementation(compose.materialIconsExtended)
+
+            implementation(compose.components.resources)
+
+            implementation(libs.kotlinX.serializationJson)
+
+            implementation(libs.material3.window.size.multiplatform)
+
+            implementation(libs.sqlDelight.runtime)
+            implementation(libs.coroutines.extensions)
+            implementation(libs.primitive.adapters)
+
+            api(libs.multiplatformSettings.noArg)
+            api(libs.multiplatformSettings.coroutines)
+
+            api(libs.napier)
+
+            implementation(libs.kotlinX.dateTime)
+            implementation(libs.koalaplot.core)
+
+            implementation(libs.stdlib)
+
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
+            implementation(libs.androidx.navigation.compose)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.android.driver)
+
+            implementation(libs.accompanist.systemUIController)
+            implementation(libs.core)
+            implementation(libs.compose.activity)
+
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.native.driver)
+
+
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.components.resources)
+        }
+    }
+}
+
+sqldelight {
+    databases {
+        create("EGOVDatabase1") {
+            packageName.set("tj.ojsk.egov.database")
+        }
+    }
+}
