@@ -116,7 +116,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.joelkanyi.focusbloom.android"
+        applicationId = "tj.ojsk.egov.android"
         minSdk = 21
         targetSdk = compileSdk
         versionCode = 5

@@ -1,30 +1,25 @@
-/*
- * Copyright 2024 Joel Kanyi.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package tj.ojsk.egov.di
 
-import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.viewModelOf
+import tj.ojsk.egov.feature.home.HomeViewModel
+import tj.ojsk.egov.feature.news.NewsViewModel
+import tj.ojsk.egov.feature.auth.AuthViewModel
+import tj.ojsk.egov.feature.onboarding.OnBoardingViewModel
+import tj.ojsk.egov.feature.others.OthersViewModel
+import tj.ojsk.egov.feature.profile.ProfileViewModel
+import tj.ojsk.egov.feature.services.ServicesViewModel
+import tj.ojsk.egov.feature.settings.SettingsViewModel
+import tj.ojsk.egov.main.MainViewModel
 import org.koin.dsl.module
 
 actual val viewModelModule = module {
-//    viewModelOf(::HomeViewModel)
-//    viewModelOf(::AddTaskViewModel)
-//    viewModelOf(::CalendarViewModel)
-//    viewModelOf(::OnboardingViewModel)
-//    viewModelOf(::SettingsViewModel)
-//    viewModelOf(::StatisticsViewModel)
-//    viewModelOf(::TaskProgressViewModel)
-//    viewModelOf(::MainViewModel)
+    viewModelOf(::AuthViewModel)
+    viewModelOf(::HomeViewModel)
+    viewModelOf(::NewsViewModel)
+    viewModelOf(::OnBoardingViewModel)
+    viewModelOf(::OthersViewModel)
+    viewModelOf(::ProfileViewModel)
+    viewModelOf(::ServicesViewModel)
+    viewModelOf(::SettingsViewModel)
+    viewModelOf(::MainViewModel)
 }

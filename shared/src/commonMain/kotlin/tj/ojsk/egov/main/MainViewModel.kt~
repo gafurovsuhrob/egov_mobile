@@ -1,0 +1,13 @@
+package tj.ojsk.egov.main
+
+import androidx.lifecycle.ViewModel
+import tj.ojsk.egov.core.domain.repository.settings.SettingsRepository
+
+
+class MainViewModel(settingsRepository: SettingsRepository) : ViewModel() {
+}
+
+sealed class OnBoardingState {
+    data object Loading : OnBoardingState()
+    data class Success(val completed: Boolean) : OnBoardingState()
+}

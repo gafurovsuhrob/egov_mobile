@@ -1,0 +1,10 @@
+package tj.ojsk.egov.core.presentation.component
+
+import androidx.compose.runtime.Composable
+
+@Composable
+fun EgovButton(
+    
+) {
+
+}

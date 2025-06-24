@@ -1,0 +1,8 @@
+package tj.ojsk.egov.feature.onboarding
+
+import androidx.compose.runtime.Composable
+
+@Composable
+fun OnboardingScreen() {
+
+}
