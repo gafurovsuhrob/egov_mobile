@@ -1,0 +1,9 @@
+platform :ios, '15.0'
+
+use_frameworks!
+use_modular_headers!
+
+target 'iosApp' do
+  # подключаем KMM framework
+  pod 'shared', :path => '../shared'
+end

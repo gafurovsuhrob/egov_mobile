@@ -45,7 +45,7 @@ kotlin {
         summary = "Some description for a Kotlin/Native module"
         homepage = "Link to a Kotlin/Native module homepage"
         ios.deploymentTarget = "14.1"
-        podfile = project.file("../ios/Podfile")
+        podfile = project.file("../iosApp/Podfile")
         framework {
             baseName = "shared"
             isStatic = false
