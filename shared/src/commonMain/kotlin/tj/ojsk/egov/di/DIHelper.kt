@@ -1,7 +1,10 @@
 package tj.ojsk.egov.di
 
 import org.koin.core.component.KoinComponent
+import kotlin.reflect.KClass
 
 class DIHelper : KoinComponent {
-    inline fun <reified T : Any> get(): T = getKoin().get()
+    fun <T : Any> get(clazz: KClass<T>): T {
+        return getKoin().get(clazz, null, null)
+    }
 }
