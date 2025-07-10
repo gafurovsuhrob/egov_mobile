@@ -1,34 +1,3 @@
-//plugins {
-//    //trick: for the same plugin versions in all sub-modules
-//    alias(libs.plugins.androidApplication).apply(false)
-//    alias(libs.plugins.androidLibrary).apply(false)
-//    alias(libs.plugins.kotlinMultiplatform).apply(false)
-//    alias(libs.plugins.composeCompiler).apply(false)
-//    alias(libs.plugins.composeMultiplatform).apply(false)
-//    alias(libs.plugins.kotlinxSerialization).apply(false)
-//    alias(libs.plugins.kmpNativeCoroutines).apply(false)
-//    alias(libs.plugins.sqlDelight) apply false
-//    alias(libs.plugins.gradleVersionsPlugin) apply false
-//    alias(libs.plugins.shadowPlugin) apply false
-//    alias(libs.plugins.kotlinCocoapods) apply false
-//}
-//
-////
-////plugins {
-////    alias(libs.plugins.androidApplication) apply false
-////    alias(libs.plugins.androidLibrary) apply false
-////    alias(libs.plugins.kotlinAndroid) apply false
-////    alias(libs.plugins.kotlinMultiplatform) apply false
-////    alias(libs.plugins.kotlinxSerialization) apply false
-////    alias(libs.plugins.kmpNativeCoroutines) apply false
-////    alias(libs.plugins.sqlDelight) apply false
-////}
-//
-//tasks.register("clean", Delete::class) {
-//    delete(rootProject.buildDir)
-//}
-
-
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false

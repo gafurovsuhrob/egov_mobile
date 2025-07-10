@@ -1,13 +1,13 @@
 {
   "name": "shared",
   "version": "1.0",
-  "homepage": "Link",
+  "homepage": "Link to a Kotlin/Native module homepage",
   "source": {
     "http": ""
   },
   "authors": "",
   "license": "",
-  "summary": "Some description",
+  "summary": "Some description for a Kotlin/Native module",
   "vendored_frameworks": "build/cocoapods/framework/shared.framework",
   "libraries": "c++",
   "platforms": {
