@@ -104,23 +104,23 @@ extension KoinApplication {
                  """)
     }
 }
-//
-//@propertyWrapper
-//struct LazyKoin<T> {
-//    lazy var wrappedValue: T = {
-//        KoinApplication.shared.inject()
-//    }()
-//
-//    init() {
-//    }
-//}
 
 @propertyWrapper
 struct LazyKoin<T> {
-    let wrappedValue: T
+    lazy var wrappedValue: T = {
+        KoinApplication.shared.inject()
+    }()
 
     init() {
-        NSLog("LazyKoin init: \(T.self)")
-        self.wrappedValue = KoinApplication.shared.inject()
     }
 }
+//
+//@propertyWrapper
+//struct LazyKoin<T> {
+//    let wrappedValue: T
+//
+//    init() {
+//        NSLog("LazyKoin init: \(T.self)")
+//        self.wrappedValue = KoinApplication.shared.inject()
+//    }
+//}
