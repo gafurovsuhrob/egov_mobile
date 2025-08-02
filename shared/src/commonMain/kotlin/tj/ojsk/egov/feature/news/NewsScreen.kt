@@ -5,8 +5,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import tj.ojsk.egov.core.data.utils.koinViewModel
-import tj.ojsk.egov.core.presentation.component.EGovTopAppBar
+import tj.ojsk.egov.core.presentation.component.TopAppBar
+import tj.ojsk.egov.core.utils.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -16,7 +16,7 @@ fun NewsScreen(
 ) {
     Scaffold(
         topBar = {
-            EGovTopAppBar {
+            TopAppBar {
                 Text(text = "Новости")
             }
         },

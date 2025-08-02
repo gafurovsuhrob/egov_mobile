@@ -5,6 +5,18 @@ import kotlinx.serialization.Serializable
 sealed class Destinations {
 
     @Serializable
+    object Splash
+
+    @Serializable
+    object Auth
+
+    @Serializable
+    object Login
+
+    @Serializable
+    object LoginIMZO
+
+    @Serializable
     object Onboarding
 
     @Serializable

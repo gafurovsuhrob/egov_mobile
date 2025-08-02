@@ -1,10 +1,11 @@
+import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlinX.serialization.plugin)
-    id("app.cash.sqldelight") version "2.0.2"
+    id("app.cash.sqldelight") version "2.1.0"
     alias(libs.plugins.nativeCocoapod)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.compiler)
@@ -53,45 +54,6 @@ kotlin {
         }
     }
 
-//    sourceSets {
-//        val commonMain by getting
-//        val commonTest by getting
-//
-////        val iosX64Main by getting
-////        val iosArm64Main by getting
-////        val iosSimulatorArm64Main by getting
-////        val iosMain by creating {
-////            dependsOn(commonMain)
-////            iosX64Main.dependsOn(this)
-////            iosArm64Main.dependsOn(this)
-////            iosSimulatorArm64Main.dependsOn(this)
-////        }
-////
-////        val iosX64Test by getting
-////        val iosArm64Test by getting
-////        val iosSimulatorArm64Test by getting
-////        val iosTest by creating {
-////            dependsOn(commonTest)
-////            iosX64Test.dependsOn(this)
-////            iosArm64Test.dependsOn(this)
-////            iosSimulatorArm64Test.dependsOn(this)
-////        }
-//        val iosMain by creating {
-//            dependsOn(commonMain)
-//            iosX64Main.dependsOn(this)
-//            iosArm64Main.dependsOn(this)
-//            iosSimulatorArm64Main.dependsOn(this)
-//        }
-//
-//        val iosTest by creating {
-//            dependsOn(commonTest)
-//            iosX64Test.dependsOn(this)
-//            iosArm64Test.dependsOn(this)
-//            iosSimulatorArm64Test.dependsOn(this)
-//        }
-//    }
-
-
     targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
         binaries.withType<org.jetbrains.kotlin.gradle.plugin.mpp.Framework> {
             @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -134,6 +96,10 @@ kotlin {
 
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.navigation.compose)
+
+            implementation("io.ktor:ktor-client-core:2.3.5")
+            implementation("io.ktor:ktor-client-content-negotiation:2.3.5")
+            implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.5")
         }
 
         androidMain.dependencies {
@@ -145,14 +111,17 @@ kotlin {
 
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
+            implementation("io.ktor:ktor-client-okhttp:2.3.5")
+            implementation("androidx.activity:activity-compose:1.8.2")
         }
 
         iosMain.dependencies {
             implementation(libs.native.driver)
 
-
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+
+            implementation("io.ktor:ktor-client-darwin:2.3.5")
         }
     }
 }

@@ -2,7 +2,7 @@ package tj.ojsk.egov.feature.settings
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import tj.ojsk.egov.core.data.utils.koinViewModel
+import tj.ojsk.egov.core.utils.koinViewModel
 
 @Composable
 fun SettingsScreen(

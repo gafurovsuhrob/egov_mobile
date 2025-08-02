@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EGovTopAppBar(
+fun TopAppBar(
     modifier: Modifier = Modifier,
     hasBackNavigation: Boolean = false,
     actions: (@Composable () -> Unit)? = null,

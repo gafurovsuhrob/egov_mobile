@@ -15,6 +15,7 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -24,10 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import org.jetbrains.compose.resources.painterResource
-import tj.ojsk.egov.core.presentation.component.EGovNavigationRailBar
+import tj.ojsk.egov.core.presentation.component.NavigationRailBar
 import tj.ojsk.egov.core.presentation.navigation.AppNavHost
-import tj.ojsk.egov.core.presentation.navigation.BottomNav
+import tj.ojsk.egov.core.presentation.navigation.BottomNavItems
 import tj.ojsk.egov.core.presentation.navigation.Destinations
+import tj.ojsk.egov.core.utils.koinViewModel
+import tj.ojsk.egov.feature.profile.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
@@ -37,11 +40,12 @@ fun MainScreen(
 ) {
     val windowSizeClass = calculateWindowSizeClass()
     val useNavRail = windowSizeClass.widthSizeClass > WindowWidthSizeClass.Compact
+    val profileViewModel: ProfileViewModel = koinViewModel()
 
     if (useNavRail) {
         Row {
             if (onBoardingCompleted) {
-                EGovNavigationRailBar(
+                NavigationRailBar(
                     navController = navController
                 )
             }
@@ -65,18 +69,20 @@ fun MainScreen(
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route?.substringBefore("?")
                     ?: Destinations.Onboarding::class.qualifiedName.orEmpty()
+                val isLoggedIn by profileViewModel.isLoggedIn.collectAsState()
+
+                val navItems = BottomNavItems.getAll(isLoggedIn)
 
                 BottomNavigation(
                     backgroundColor = MaterialTheme.colorScheme.background,
                 ) {
-                    BottomNav.entries
-                        .forEach { navigationItem ->
+                    navItems.forEach { navigationItem ->
                             val isSelected by remember(currentRoute) {
                                 derivedStateOf { currentRoute == navigationItem.route::class.qualifiedName }
                             }
                             BottomNavigationItem(
                                 modifier = Modifier
-                                    .testTag(navigationItem.name)
+                                    .testTag(navigationItem.label)
                                     .padding(horizontal = 8.dp),
                                 selected = isSelected,
                                 label = {

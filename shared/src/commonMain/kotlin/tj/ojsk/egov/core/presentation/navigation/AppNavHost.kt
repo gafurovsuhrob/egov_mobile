@@ -6,6 +6,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import tj.ojsk.egov.feature.auth.AuthScreen
+import tj.ojsk.egov.feature.auth.LoginIMZOScreen
+import tj.ojsk.egov.feature.auth.LoginScreen
 import tj.ojsk.egov.feature.home.HomeScreen
 import tj.ojsk.egov.feature.news.NewsScreen
 import tj.ojsk.egov.feature.onboarding.OnboardingScreen
@@ -13,6 +16,7 @@ import tj.ojsk.egov.feature.others.OthersScreen
 import tj.ojsk.egov.feature.profile.ProfileScreen
 import tj.ojsk.egov.feature.services.ServicesScreen
 import tj.ojsk.egov.feature.settings.SettingsScreen
+import tj.ojsk.egov.feature.splash.SplashScreen
 
 @Composable
 fun AppNavHost(
@@ -23,8 +27,16 @@ fun AppNavHost(
     NavHost(
         modifier = modifier.fillMaxSize(),
         navController = navController,
-        startDestination = if (completedOnboarding) Destinations.Home else Destinations.Onboarding
+        startDestination =
+            Destinations.Splash
     ) {
+        composable<Destinations.Splash> {
+            SplashScreen {
+                navController.navigate(if (completedOnboarding) Destinations.Home else Destinations.Onboarding) {
+                    popUpTo(Destinations.Splash) { inclusive = true }
+                }
+            }
+        }
 
         composable<Destinations.Onboarding> {
             OnboardingScreen(
@@ -67,48 +79,5 @@ fun AppNavHost(
                 navController = navController
             )
         }
-
-
-
-
-//        composable<Destinations.AllTasks> { backStackEntry ->
-//            val allTasks: Destinations.AllTasks = backStackEntry.toRoute()
-//            AllTasksScreen(
-//                type = allTasks.type,
-//                navController = navController
-//            )
-//        }
-//
-//        composable<Destinations.AddTask> { backStackEntry ->
-//            val addTask: Destinations.AddTask = backStackEntry.toRoute()
-//            AddTaskScreen(
-//                taskId = addTask.taskId,
-//                navController = navController
-//            )
-//        }
-//
-//        composable<Destinations.Calendar> {
-//            CalendarScreen(navController = navController)
-//        }
-//
-//        composable<Destinations.Statistics> {
-//            StatisticsScreen(navController = navController)
-//        }
-//
-//        composable<Destinations.AllStatistics> {
-//            AllStatisticsScreen(navController = navController)
-//        }
-//
-//        composable<Destinations.Settings> {
-//            SettingsScreen(navController = navController)
-//        }
-//
-//        composable<Destinations.TaskProgress> { backStackEntry ->
-//            val taskProgress: Destinations.TaskProgress = backStackEntry.toRoute()
-//            TaskProgressScreen(
-//                taskId = taskProgress.taskId,
-//                navController = navController
-//            )
-//        }
     }
 }

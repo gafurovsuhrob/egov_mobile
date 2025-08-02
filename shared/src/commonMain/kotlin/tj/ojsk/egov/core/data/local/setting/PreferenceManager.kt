@@ -41,6 +41,8 @@ class PreferenceManager constructor(private val settings: Settings) {
     fun getIntFlow(key: String) = observableSettings.getIntFlow(key = key, defaultValue = 0)
 
     companion object {
+
+        const val IS_LOGGED_IN = "is_logged_in_key"
         const val NOTIFICATION_OPTION = "notification_option_key"
         const val USERNAME = "username_key"
         const val SHORT_BREAK_COLOR = "short_break_color_key"
@@ -51,6 +53,15 @@ class PreferenceManager constructor(private val settings: Settings) {
         const val SHORT_BREAK_TIME = "short_break_time_key"
         const val LONG_BREAK_TIME = "long_break_time_key"
         const val HOUR_FORMAT = "hour_format_key"
+    }
+
+    fun setIsLoggedIn(value: Boolean) {
+        observableSettings.set(key = IS_LOGGED_IN, value = value)
+    }
+
+    @OptIn(ExperimentalSettingsApi::class)
+    fun getIsLoggedIn(): Flow<Boolean> {
+        return observableSettings.getBooleanFlow(key = IS_LOGGED_IN, defaultValue = false)
     }
 
     @OptIn(ExperimentalSettingsApi::class)

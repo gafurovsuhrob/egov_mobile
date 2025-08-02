@@ -4,14 +4,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import tj.ojsk.egov.core.domain.repository.auth.AuthRepository
 import tj.ojsk.egov.core.domain.repository.settings.SettingsRepository
 
 
 class MainViewModel(
-    settingsRepository: SettingsRepository
+    settingsRepository: SettingsRepository,
+    authRepository: AuthRepository
 ) : ViewModel() {
+
+    val isAuthenticated = flow {
+        emit(authRepository.isLoggedIn())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val appTheme: StateFlow<Int?> = settingsRepository.getAppTheme().map { it }.stateIn(
         scope = viewModelScope,

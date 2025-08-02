@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import tj.ojsk.egov.core.domain.model.TextFieldState
 
 @Composable
-fun EGovInputTextField(
+fun InputTextField(
     modifier: Modifier = Modifier,
     label: (@Composable () -> Unit)? = null,
     placeholder: (@Composable () -> Unit)? = null,

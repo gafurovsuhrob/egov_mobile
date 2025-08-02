@@ -12,13 +12,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.LocalTime
-import tj.ojsk.egov.core.data.utils.koinViewModel
+import tj.ojsk.egov.core.utils.koinViewModel
 import tj.ojsk.egov.core.domain.model.TextFieldState
-import tj.ojsk.egov.core.presentation.component.EGovDateBoxField
-import tj.ojsk.egov.core.presentation.component.EGovInputTextField
-import tj.ojsk.egov.core.presentation.component.EGovTopAppBar
+import tj.ojsk.egov.core.presentation.component.InputTextField
+import tj.ojsk.egov.core.presentation.component.TopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +25,7 @@ fun HomeScreen(
 ) {
     Scaffold(
         topBar = {
-            EGovTopAppBar {
+            TopAppBar {
                 Text(text = "Главная")
             }
         },
@@ -41,7 +38,7 @@ fun HomeScreen(
 private fun Test(
     onTaskDescriptionChange: (String) -> Unit,
 ){
-    EGovInputTextField(
+    InputTextField(
         modifier = Modifier.fillMaxWidth(),
         maxLines = 5,
         label = {

@@ -17,8 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import org.koin.core.logger.Logger
-import tj.ojsk.egov.core.presentation.component.EGovTopAppBar
+import tj.ojsk.egov.core.presentation.component.TopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +27,7 @@ fun OthersScreen(
 ) {
     Scaffold(
         topBar = {
-            EGovTopAppBar {
+            TopAppBar {
                 Text(text = "Прочее")
             }
         },
