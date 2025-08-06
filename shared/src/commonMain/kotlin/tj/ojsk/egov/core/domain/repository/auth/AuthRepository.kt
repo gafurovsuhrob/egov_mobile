@@ -10,5 +10,5 @@ interface AuthRepository {
 
 
     suspend fun loginByUsername(username: String, password: String): AuthResult
-    suspend fun loginByPhone(phone: String, code: String): AuthResult
+    suspend fun loginWithImzoCode(code: String): AuthResult
 }

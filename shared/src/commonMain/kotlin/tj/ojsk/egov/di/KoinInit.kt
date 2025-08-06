@@ -12,6 +12,7 @@ class KoinInit {
                     platformModule(),
                     commonModule(),
                     viewModelModule,
+                    networkModule
                 ),
             )
             appDeclaration()

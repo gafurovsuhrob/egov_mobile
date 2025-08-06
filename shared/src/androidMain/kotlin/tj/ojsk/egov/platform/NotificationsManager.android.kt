@@ -11,6 +11,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import tj.ojsk.egov.shared.R
+import androidx.core.net.toUri
 
 actual class NotificationsManager(
     private val context: Context,
@@ -29,9 +30,8 @@ actual class NotificationsManager(
             action = UpdateAction
         }*/
 
-        val sound = Uri.parse(
-            "${ContentResolver.SCHEME_ANDROID_RESOURCE}://${context.applicationContext.packageName}/${R.raw.alarm}",
-        )
+        val sound =
+            "${ContentResolver.SCHEME_ANDROID_RESOURCE}://${context.applicationContext.packageName}/${R.raw.alarm}".toUri()
 
         println("sound: $sound")
 

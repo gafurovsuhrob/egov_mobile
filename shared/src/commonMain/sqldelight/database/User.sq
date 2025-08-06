@@ -1,0 +1,40 @@
+CREATE TABLE UserEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    tin TEXT,
+    pinfl TEXT,
+    username TEXT,
+    firstname TEXT,
+    lastname TEXT,
+    middlename TEXT,
+    registered_at TEXT,
+    birth_date TEXT,
+    gender TEXT,
+    passport_serial_number TEXT,
+    pport_issue_place TEXT,
+    mobile_phone TEXT,
+    email TEXT
+);
+
+insertUser:
+INSERT INTO UserEntity(
+    tin,
+    pinfl,
+    username,
+    firstname,
+    lastname,
+    middlename,
+    registered_at,
+    birth_date,
+    gender,
+    passport_serial_number,
+    pport_issue_place,
+    mobile_phone,
+    email
+) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+selectUser:
+SELECT * FROM UserEntity
+LIMIT 1;
+
+deleteAll:
+DELETE FROM UserEntity;

@@ -12,6 +12,9 @@ import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
@@ -26,6 +29,7 @@ import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import org.koin.compose.currentKoinScope
 import tj.ojsk.egov.core.domain.model.SessionType
+import tj.ojsk.egov.core.presentation.navigation.Destinations
 import kotlin.jvm.JvmInline
 
 @Composable
@@ -407,5 +411,18 @@ inline fun <reified T : ViewModel> koinViewModel(): T {
     val scope = currentKoinScope()
     return viewModel {
         scope.get<T>()
+    }
+}
+
+fun NavController.navigateToTopLevelDestination(route: Any) {
+    val routeStr = route.toString()
+
+    this.navigate(routeStr) {
+        popUpTo(this@navigateToTopLevelDestination.graph.findStartDestination()) {
+            inclusive = false
+            saveState = true
+        }
+        launchSingleTop = true
+        restoreState = true
     }
 }

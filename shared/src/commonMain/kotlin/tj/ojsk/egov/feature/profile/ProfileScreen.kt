@@ -23,7 +23,6 @@ import tj.ojsk.egov.feature.auth.LoginBottomSheetContent
 import tj.ojsk.egov.feature.auth.view_model.AuthViewModel
 import tj.ojsk.egov.feature.auth.view_model.LoginEvent
 import tj.ojsk.egov.feature.auth.view_model.LoginMethod
-import tj.ojsk.egov.platform.rememberMyIdLauncher
 
 @Composable
 fun ProfileScreen(
@@ -34,7 +33,6 @@ fun ProfileScreen(
 
     val isLoggedIn by profileViewModel.isLoggedIn.collectAsState()
     val uiState by authViewModel.uiState.collectAsState()
-    val myIdLauncher = rememberMyIdLauncher()
 
     var showLoginSheet by remember { mutableStateOf(false) }
 
@@ -51,17 +49,18 @@ fun ProfileScreen(
                 username = uiState.username,
                 onLogoutConfirmed = {
                     authViewModel.logout()
-                }
+                },
+                profileViewModel = profileViewModel
             )
         } else {
             AuthScreen(
                 onLoginWithUsernamePassword = {
                     authViewModel.onEvent(LoginEvent.OnLoginMethodSelected(LoginMethod.USERNAME_PASSWORD))
-
                     showLoginSheet = true
                 },
                 onLoginWithIMZO = {
-                    myIdLauncher.launch()
+                    authViewModel.onEvent(LoginEvent.OnLoginMethodSelected(LoginMethod.IMZO))
+                    authViewModel.startImzoLogin()
                 }
             )
         }
@@ -90,9 +89,11 @@ fun ProfileScreen(
 fun ProfileContent(
     navController: NavController,
     username: String,
-    onLogoutConfirmed: () -> Unit
+    onLogoutConfirmed: () -> Unit,
+    profileViewModel: ProfileViewModel
 ) {
     var showLogoutDialog by remember { mutableStateOf(false) }
+    val user by profileViewModel.currentUser.collectAsState()
 
     Scaffold(
         topBar = {
@@ -112,7 +113,7 @@ fun ProfileContent(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Добро пожаловать, $username!",
+                text = "Добро пожаловать, ${user?.firstname} ${user?.lastname}!",
                 style = MaterialTheme.typography.headlineSmall
             )
 

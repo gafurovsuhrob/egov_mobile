@@ -4,17 +4,23 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import database.UserEntity
 import egov.shared.generated.resources.Res
 import egov.shared.generated.resources.gerb
 import egov.shared.generated.resources.logo_filled
 import org.jetbrains.compose.resources.painterResource
+import tj.ojsk.egov.core.presentation.component.Button
 import tj.ojsk.egov.core.presentation.navigation.Destinations
+import tj.ojsk.egov.core.utils.koinViewModel
+import tj.ojsk.egov.feature.auth.view_model.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -22,6 +28,9 @@ fun AuthScreen(
     onLoginWithUsernamePassword: () -> Unit,
     onLoginWithIMZO: () -> Unit,
 ) {
+    val viewModel: AuthViewModel = koinViewModel()
+    val state by viewModel.uiState.collectAsState()
+
     Scaffold { padding ->
         Column(
             modifier = Modifier
@@ -89,10 +98,9 @@ fun AuthScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
-                    shape = MaterialTheme.shapes.medium,
-                ) {
-                    Text(text = "Войти через IMZO")
-                }
+                    text = "Войти по IMZO",
+                    isLoading = state.isLoading,
+                )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
@@ -104,18 +112,14 @@ fun AuthScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                OutlinedButton(
+                Button(
                     onClick = onLoginWithUsernamePassword,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
-                    shape = MaterialTheme.shapes.medium,
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        contentColor = MaterialTheme.colorScheme.primary
-                    )
-                ) {
-                    Text(text = "Войти по электронной почте")
-                }
+                    text = "Войти по электронной почте",
+                    outlined = true
+                )
             }
         }
     }

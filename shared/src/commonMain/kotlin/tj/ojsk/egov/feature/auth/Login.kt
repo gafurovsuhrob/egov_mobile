@@ -186,8 +186,6 @@ fun LoginScreen(navController: NavController) {
     }
 }
 
-
-
 @Composable
 fun LoginBottomSheetContent(
     state: LoginUiState,

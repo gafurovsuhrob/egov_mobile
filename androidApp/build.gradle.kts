@@ -55,4 +55,5 @@ dependencies {
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.ui.tooling.preview.android)
     coreLibraryDesugaring(libs.core.library.desugaring)
+    implementation(libs.androidx.navigation.compose)
 }

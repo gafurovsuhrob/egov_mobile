@@ -30,6 +30,7 @@ import tj.ojsk.egov.core.presentation.navigation.AppNavHost
 import tj.ojsk.egov.core.presentation.navigation.BottomNavItems
 import tj.ojsk.egov.core.presentation.navigation.Destinations
 import tj.ojsk.egov.core.utils.koinViewModel
+import tj.ojsk.egov.core.utils.navigateToTopLevelDestination
 import tj.ojsk.egov.feature.profile.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

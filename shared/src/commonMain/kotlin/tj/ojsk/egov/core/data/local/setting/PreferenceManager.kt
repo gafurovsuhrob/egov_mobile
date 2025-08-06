@@ -12,7 +12,9 @@ import com.russhwolf.settings.set
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
-class PreferenceManager constructor(private val settings: Settings) {
+class PreferenceManager constructor(
+    private val settings: Settings
+) {
     private val observableSettings: ObservableSettings by lazy { settings as ObservableSettings }
 
     @OptIn(ExperimentalSettingsApi::class)

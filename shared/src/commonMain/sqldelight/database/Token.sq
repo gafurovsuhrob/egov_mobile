@@ -1,0 +1,22 @@
+CREATE TABLE Token (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    access_token TEXT NOT NULL,
+    refresh_token TEXT NOT NULL,
+    expires_in INTEGER NOT NULL,
+    authorities TEXT NOT NULL
+);
+
+insertToken:
+INSERT INTO Token(
+    access_token,
+    refresh_token,
+    expires_in,
+    authorities
+) VALUES (?, ?, ?, ?);
+
+selectToken:
+SELECT * FROM Token
+LIMIT 1;
+
+deleteAll:
+DELETE FROM Token;

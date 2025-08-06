@@ -133,7 +133,7 @@ dependencies {
 
 sqldelight {
     databases {
-        create("EGOVDatabase1") {
+        create("EGOVDatabase") {
             packageName.set("tj.ojsk.egov.database")
         }
     }

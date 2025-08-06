@@ -9,12 +9,21 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import tj.ojsk.egov.core.data.local.manager.UserManager
+import tj.ojsk.egov.core.data.remote.NetworkClient
+import tj.ojsk.egov.core.data.remote.NetworkResult
+import tj.ojsk.egov.core.data.remote.model.auth.response.AuthRedirectResponse
 import tj.ojsk.egov.core.domain.repository.auth.AuthRepository
-import tj.ojsk.egov.core.domain.repository.settings.SettingsRepository
+import tj.ojsk.egov.platform.BrowserLauncher
 import tj.ojsk.egov.platform.Logger
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 class AuthViewModel(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val browserLauncher: BrowserLauncher,
+    private val networkClient: NetworkClient,
+    private val userManager: UserManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
@@ -47,7 +56,7 @@ class AuthViewModel(
             is LoginEvent.OnLoginClicked -> {
                 when (_uiState.value.loginMethod) {
                     LoginMethod.USERNAME_PASSWORD -> loginWithUsername()
-                    LoginMethod.PHONE_CODE -> {}
+                    LoginMethod.IMZO -> startImzoLogin()
                 }
             }
             is LoginEvent.OnLoginMethodSelected -> {
@@ -59,6 +68,10 @@ class AuthViewModel(
                 _uiState.value = LoginUiState()
             }
         }
+    }
+
+    private fun updateState(block: LoginUiState.() -> LoginUiState) {
+        _uiState.update(block)
     }
 
     fun login() {
@@ -77,6 +90,51 @@ class AuthViewModel(
         emit(authRepository.isLoggedIn())
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
+    fun startImzoLogin() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
+            openImzoAuthorizationPage()
+
+            _uiState.update { it.copy(isLoading = false) }
+        }
+    }
+
+    fun loginWithAuthorizationCode(code: String) {
+        viewModelScope.launch {
+            when (val result = authRepository.loginWithImzoCode(code)) {
+                is AuthResult.Success -> {
+                    updateState { copy(isLoggedIn = true) }
+                    login()
+                }
+                is AuthResult.Error -> updateState { copy(errorMessage = result.message) }
+            }
+        }
+    }
+
+    fun loginWithAuthorizationCode2(code: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
+            when (val result = authRepository.loginWithImzoCode(code)) {
+                is AuthResult.Success -> {
+                    when (val result = authRepository.loginWithImzoCode(code)) {
+                        is AuthResult.Success -> {
+                            updateState { copy(isLoading = false, isLoggedIn = true) }
+                            login()
+                        }
+                        is AuthResult.Error -> {
+                            updateState { copy(isLoading = false, errorMessage = result.message) }
+                        }
+                    }
+                }
+
+                is AuthResult.Error -> {
+                    updateState { copy(isLoading = false, errorMessage = result.message) }
+                }
+            }
+        }
+    }
 
     private fun loginWithUsername() {
         val username = _uiState.value.username
@@ -110,28 +168,31 @@ class AuthViewModel(
         }
     }
 
-//    private fun loginIMZO() {
-//        val phone = _uiState.value.number
-//        val code = _uiState.value.verificationCode
-//
-//        val validationError = LoginValidator.validatePhoneAndCode(phone, code)
-//        if (validationError != null) {
-//            _uiState.update { it.copy(errorMessage = validationError) }
-//            return
-//        }
-//
-//        viewModelScope.launch {
-//            _uiState.update { it.copy(isLoading = true) }
-//            try {
-//                val result = authRepository.loginByPhone(phone, code)
-//                _uiState.update {
-//                    it.copy(isLoading = false, isLoggedIn = result)
-//                }
-//            } catch (e: Exception) {
-//                _uiState.update {
-//                    it.copy(isLoading = false, errorMessage = e.message ?: "Ошибка IMZO входа")
-//                }
-//            }
-//        }
-//    }
+    private suspend fun openImzoAuthorizationPage() {
+        val queryParams = mapOf(
+            "response_type" to "code",
+            "client_id" to "imzo",
+            "redirect_uri" to "egov://oauth/callback",
+            "scope" to "imzo",
+            "state" to generateRandomState()
+        )
+
+        val result = networkClient.post<AuthRedirectResponse, Unit>(
+            endpoint = "oauth/sso-url",
+            queryParams = queryParams,
+            authorized = false
+        )
+
+        when (result) {
+            is NetworkResult.Success -> browserLauncher.openUrl(result.data.url)
+            is NetworkResult.HttpError -> Logger.e("IMZO", "Ошибка: ${result.message}")
+            is NetworkResult.NetworkError -> Logger.e("IMZO", "Сеть: ${result.exception.message}")
+            is NetworkResult.Unauthorized -> Logger.e("IMZO", "Unauthorized")
+        }
+    }
+
+    @OptIn(ExperimentalUuidApi::class)
+    private fun generateRandomState(): String {
+        return Uuid.random().toString()
+    }
 }
