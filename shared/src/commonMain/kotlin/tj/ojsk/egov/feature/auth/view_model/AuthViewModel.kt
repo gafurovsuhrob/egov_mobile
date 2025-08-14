@@ -14,6 +14,7 @@ import tj.ojsk.egov.core.data.remote.NetworkClient
 import tj.ojsk.egov.core.data.remote.NetworkResult
 import tj.ojsk.egov.core.data.remote.model.auth.response.AuthRedirectResponse
 import tj.ojsk.egov.core.domain.repository.auth.AuthRepository
+import tj.ojsk.egov.main.MainViewModel
 import tj.ojsk.egov.platform.BrowserLauncher
 import tj.ojsk.egov.platform.Logger
 import kotlin.uuid.ExperimentalUuidApi
@@ -23,11 +24,15 @@ class AuthViewModel(
     private val authRepository: AuthRepository,
     private val browserLauncher: BrowserLauncher,
     private val networkClient: NetworkClient,
-    private val userManager: UserManager
+    private val mainViewModel: MainViewModel
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState
+
+    init {
+        println("AuthViewModel created: ${this.hashCode()} with MainViewModel: ${mainViewModel.hashCode()}")
+    }
 
     fun onEvent(event: LoginEvent) {
         when (event) {
@@ -86,10 +91,6 @@ class AuthViewModel(
         }
     }
 
-    val isAuthenticated = flow {
-        emit(authRepository.isLoggedIn())
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
-
     fun startImzoLogin() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
@@ -100,38 +101,16 @@ class AuthViewModel(
         }
     }
 
-    fun loginWithAuthorizationCode(code: String) {
-        viewModelScope.launch {
-            when (val result = authRepository.loginWithImzoCode(code)) {
-                is AuthResult.Success -> {
-                    updateState { copy(isLoggedIn = true) }
-                    login()
-                }
-                is AuthResult.Error -> updateState { copy(errorMessage = result.message) }
+    suspend fun loginWithAuthorizationCode(code: String): Boolean {
+        return when (val result = authRepository.loginWithImzoCode(code)) {
+            is AuthResult.Success -> {
+                updateState { copy(isLoggedIn = true) }
+                login()
+                true
             }
-        }
-    }
-
-    fun loginWithAuthorizationCode2(code: String) {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
-
-            when (val result = authRepository.loginWithImzoCode(code)) {
-                is AuthResult.Success -> {
-                    when (val result = authRepository.loginWithImzoCode(code)) {
-                        is AuthResult.Success -> {
-                            updateState { copy(isLoading = false, isLoggedIn = true) }
-                            login()
-                        }
-                        is AuthResult.Error -> {
-                            updateState { copy(isLoading = false, errorMessage = result.message) }
-                        }
-                    }
-                }
-
-                is AuthResult.Error -> {
-                    updateState { copy(isLoading = false, errorMessage = result.message) }
-                }
+            is AuthResult.Error -> {
+                updateState { copy(errorMessage = result.message) }
+                false
             }
         }
     }

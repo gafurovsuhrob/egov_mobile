@@ -30,8 +30,8 @@ class SplashViewModel(
 
     private fun load() {
         scope.launch {
-//            val isLoggedIn = authRepository.isLoggedIn()
-            val isLoggedIn = false
+            val isLoggedIn = authRepository.isLoggedIn()
+//            val isLoggedIn = false
             preloadRepository.loadInitialData()
             _state.value = SplashState.Success(isLoggedIn)
         }

@@ -1,7 +1,5 @@
 package tj.ojsk.egov.feature.home
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +11,6 @@ import tj.ojsk.egov.core.data.remote.NetworkClient
 import tj.ojsk.egov.core.data.remote.NetworkResult
 import tj.ojsk.egov.core.data.remote.model.auth.request.AuthDTO
 import tj.ojsk.egov.core.domain.model.auth.UserResponse
-import tj.ojsk.egov.core.domain.model.documents.category.CategoriesResponse
 import tj.ojsk.egov.core.domain.repository.settings.SettingsRepository
 
 class HomeViewModel(

@@ -1,4 +1,4 @@
-package tj.ojsk.egov.core.domain.model.documents.documents
+package tj.ojsk.egov.core.domain.model.reference.documents
 
 
 data class DocumentsData(

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -25,12 +24,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import tj.ojsk.egov.EGOVApp
 import tj.ojsk.egov.core.presentation.navigation.Destinations
 import tj.ojsk.egov.core.utils.navigateToTopLevelDestination
-import tj.ojsk.egov.feature.auth.view_model.AuthViewModel
+import tj.ojsk.egov.main.MainViewModel
 
 class MainActivity : ComponentActivity() {
-
-    private val authViewModel: AuthViewModel by viewModel()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,7 +91,6 @@ class MainActivity : ComponentActivity() {
             )*/
 
             EGOVApp()
-
         }
     }
 
@@ -109,8 +104,8 @@ class MainActivity : ComponentActivity() {
             if (uri.scheme == "egov" && uri.host == "oauth" && uri.path == "/callback") {
                 val code = uri.getQueryParameter("code")
                 if (!code.isNullOrEmpty()) {
-                    authViewModel.loginWithAuthorizationCode(code)
-
+                    val viewModel: MainViewModel by viewModel()
+                    viewModel.handleImzoCode(code)
                 }
             }
         }

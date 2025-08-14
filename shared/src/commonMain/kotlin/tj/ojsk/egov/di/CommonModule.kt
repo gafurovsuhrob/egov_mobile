@@ -73,7 +73,6 @@ fun commonModule() = module {
     single<PreloadRepository> {
         PreloadRepositoryImpl()
     }
-
 }
 
 expect fun platformModule(): Module

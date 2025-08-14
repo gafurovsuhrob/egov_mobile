@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import org.jetbrains.compose.resources.painterResource
+import tj.ojsk.egov.core.presentation.component.LoadingDialog
 import tj.ojsk.egov.core.presentation.component.NavigationRailBar
 import tj.ojsk.egov.core.presentation.navigation.AppNavHost
 import tj.ojsk.egov.core.presentation.navigation.BottomNavItems
@@ -38,10 +39,13 @@ import tj.ojsk.egov.feature.profile.ProfileViewModel
 fun MainScreen(
     navController: NavHostController,
     onBoardingCompleted: Boolean,
+    mainViewModel: MainViewModel = koinViewModel(),
 ) {
     val windowSizeClass = calculateWindowSizeClass()
     val useNavRail = windowSizeClass.widthSizeClass > WindowWidthSizeClass.Compact
     val profileViewModel: ProfileViewModel = koinViewModel()
+    val dialogState by mainViewModel.loadingDialogState.collectAsState()
+
 
     if (useNavRail) {
         Row {
@@ -57,7 +61,7 @@ fun MainScreen(
         }
     } else {
         Scaffold(
-            modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars), // 👈 добавлено
+            modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars),
             contentWindowInsets = WindowInsets.systemBars,
             content = { innerPadding ->
                 AppNavHost(
@@ -110,6 +114,11 @@ fun MainScreen(
                         }
                 }
             }
+        )
+
+        LoadingDialog(
+            state = dialogState,
+            onDismiss = { mainViewModel.dismissDialog() }
         )
     }
 }

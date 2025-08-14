@@ -1,10 +1,10 @@
 package tj.ojsk.egov.core.data.remote.mapper
 
-import tj.ojsk.egov.core.data.remote.model.TextTranslationsDTO
-import tj.ojsk.egov.core.domain.model.TextTranslations
+import tj.ojsk.egov.core.data.remote.model.LocalizedTextDTO
+import tj.ojsk.egov.core.domain.model.LocalizedText
 
-fun TextTranslationsDTO.toDomain(): TextTranslations{
-    return TextTranslations(
+fun LocalizedTextDTO.toDomain(): LocalizedText{
+    return LocalizedText(
         ru = ru,
         tj = tj,
         en = en

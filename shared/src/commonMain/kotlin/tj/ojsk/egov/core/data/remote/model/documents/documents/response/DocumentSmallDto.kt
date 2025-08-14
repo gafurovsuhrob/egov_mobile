@@ -1,15 +1,10 @@
 package tj.ojsk.egov.core.data.remote.model.documents.documents.response
 
-import kotlinx.serialization.Serializable
 import tj.ojsk.egov.core.data.remote.model.LocalizedTextDTO
 
-@Serializable
-data class DocumentDTO(
-    val description: LocalizedTextDTO,
+data class DocumentSmallDto(
     val icon: String,
     val id: Int,
-    val position: Int,
-    val tags: String,
     val title: LocalizedTextDTO,
     val type: String,
     val type_title: LocalizedTextDTO
