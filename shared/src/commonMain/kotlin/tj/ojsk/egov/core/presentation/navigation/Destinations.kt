@@ -40,4 +40,7 @@ sealed class Destinations {
     @Serializable
     object News
 
+    @Serializable
+    object Search
+
 }

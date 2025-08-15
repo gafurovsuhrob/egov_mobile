@@ -23,6 +23,7 @@ class AuthRepositoryImpl(
     private val tokenManager: TokenManager,
     private val userManager: UserManager
 ) : AuthRepository {
+
     override suspend fun isLoggedIn(): Boolean {
         return preferenceManager.getIsLoggedIn().first()
     }
@@ -94,5 +95,11 @@ class AuthRepositoryImpl(
             is NetworkResult.Unauthorized ->
                 Error("Не авторизован")
         }
+    }
+
+    override suspend fun logout() {
+        userManager.deleteUser()
+        tokenManager.deleteToken()
+        setLoggedIn(false)
     }
 }

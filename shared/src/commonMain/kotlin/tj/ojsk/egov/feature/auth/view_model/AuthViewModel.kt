@@ -88,6 +88,7 @@ class AuthViewModel(
     fun logout() {
         viewModelScope.launch {
             authRepository.setLoggedIn(false)
+            authRepository.logout()
         }
     }
 

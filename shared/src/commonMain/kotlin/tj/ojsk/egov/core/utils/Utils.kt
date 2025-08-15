@@ -28,8 +28,10 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import org.koin.compose.currentKoinScope
+import tj.ojsk.egov.core.domain.model.LocalizedText
 import tj.ojsk.egov.core.domain.model.SessionType
 import tj.ojsk.egov.core.presentation.navigation.Destinations
+import tj.ojsk.egov.platform.getCurrentLanguage
 import kotlin.jvm.JvmInline
 
 @Composable
@@ -424,5 +426,14 @@ fun NavController.navigateToTopLevelDestination(route: Any) {
         }
         launchSingleTop = true
         restoreState = true
+    }
+}
+
+fun LocalizedText.getByAppLanguage(): String {
+    return when (getCurrentLanguage()) {
+        "ru" -> this.ru
+        "tj", "tg" -> this.tj
+        "en" -> this.en
+        else -> this.ru
     }
 }

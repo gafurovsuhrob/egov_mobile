@@ -1,4 +1,0 @@
-package tj.ojsk.egov.feature.auth
-
-class AuthViewModel {
-}

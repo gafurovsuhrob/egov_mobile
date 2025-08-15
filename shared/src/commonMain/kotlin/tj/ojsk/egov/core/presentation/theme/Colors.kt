@@ -9,7 +9,7 @@ val PrimaryDarkColor = Color(0xFF4F8E62)
 val SecondaryColor = Color(0xFFB8D8C7)
 val SecondaryLightColor = SecondaryColor.copy(alpha = 0.75f)
 
-val PrimaryTextColor = Color(0xFFFFFFFF)
+val PrimaryTextColor = Color(0xFF212121)
 val SecondaryTextColor = Color(0xFF000000)
 
 val SurfaceLight = Color(0xFFFFFFFF)

@@ -45,7 +45,7 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Test",
                 onClick = {
-                    viewModel.getCategories()
+                    viewModel.testRequest()
                 },
             )
         }

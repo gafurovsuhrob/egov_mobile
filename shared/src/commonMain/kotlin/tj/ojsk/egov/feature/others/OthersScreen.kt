@@ -31,10 +31,9 @@ fun OthersScreen(
                 Text(text = "Прочее")
             }
         },
-    ) { paddingValues -> // <-- добавьте этот параметр
+    ) { paddingValues ->
         val sampleItems = listOf("Политика конфиденциальности", "Контакты", "Настройки", "Выход")
 
-        // Добавим padding от Scaffold
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues) // <-- вот он!

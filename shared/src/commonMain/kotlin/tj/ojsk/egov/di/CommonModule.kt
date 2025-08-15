@@ -11,11 +11,13 @@ import tj.ojsk.egov.core.data.local.manager.UserManager
 import tj.ojsk.egov.core.data.local.setting.PreferenceManager
 import tj.ojsk.egov.core.data.repository.auth.AuthRepositoryImpl
 import tj.ojsk.egov.core.data.repository.auth.TokenProviderImpl
+import tj.ojsk.egov.core.data.repository.categories.CategoryRepositoryImpl
 import tj.ojsk.egov.core.data.repository.preload.PreloadRepositoryImpl
 import tj.ojsk.egov.core.data.repository.settings.SettingsRepositoryImpl
 import tj.ojsk.egov.core.domain.repository.auth.AuthRepository
 import tj.ojsk.egov.core.domain.repository.auth.TokenProvider
 import tj.ojsk.egov.core.domain.repository.preload.PreloadRepository
+import tj.ojsk.egov.core.domain.repository.reference.categories.CategoryRepository
 import tj.ojsk.egov.core.domain.repository.settings.SettingsRepository
 import tj.ojsk.egov.database.EGOVDatabase
 import tj.ojsk.egov.platform.DatabaseDriverFactory
@@ -68,6 +70,11 @@ fun commonModule() = module {
             networkClient = get(),
             tokenManager = get(),
             userManager = get()
+        )
+    }
+    single<CategoryRepository>{
+        CategoryRepositoryImpl(
+            networkClient = get()
         )
     }
     single<PreloadRepository> {

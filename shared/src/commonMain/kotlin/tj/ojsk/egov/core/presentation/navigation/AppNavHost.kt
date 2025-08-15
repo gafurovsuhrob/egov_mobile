@@ -6,9 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import tj.ojsk.egov.feature.auth.AuthScreen
-import tj.ojsk.egov.feature.auth.LoginIMZOScreen
-import tj.ojsk.egov.feature.auth.LoginScreen
+import tj.ojsk.egov.feature.SearchScreen
 import tj.ojsk.egov.feature.home.HomeScreen
 import tj.ojsk.egov.feature.news.NewsScreen
 import tj.ojsk.egov.feature.onboarding.OnboardingScreen
@@ -76,6 +74,12 @@ fun AppNavHost(
 
         composable<Destinations.News> {
             NewsScreen(
+                navController = navController
+            )
+        }
+
+        composable<Destinations.Search>{
+            SearchScreen(
                 navController = navController
             )
         }

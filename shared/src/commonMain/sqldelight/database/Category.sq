@@ -1,0 +1,41 @@
+import kotlin.Boolean;
+
+CREATE TABLE CategoryEntity (
+    id INTEGER NOT NULL PRIMARY KEY,
+    title_ru TEXT NOT NULL,
+    title_tj TEXT NOT NULL,
+    title_en TEXT NOT NULL,
+    description_ru TEXT,
+    description_tj TEXT,
+    description_en TEXT,
+    gradient_start_color TEXT,
+    gradient_end_color TEXT,
+    icon TEXT,
+    icon_id TEXT,
+    position INTEGER,
+    soon INTEGER AS Boolean NOT NULL
+);
+
+getCategories:
+SELECT * FROM CategoryEntity
+ORDER BY position ASC;
+
+insertCategory:
+INSERT OR REPLACE INTO CategoryEntity(
+    id,
+    title_ru,
+    title_tj,
+    title_en,
+    description_ru,
+    description_tj,
+    description_en,
+    gradient_start_color,
+    gradient_end_color,
+    icon,
+    icon_id,
+    position,
+    soon
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+clearCategories:
+DELETE FROM CategoryEntity;
